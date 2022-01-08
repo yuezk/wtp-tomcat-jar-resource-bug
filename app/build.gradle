@@ -1,0 +1,20 @@
+plugins {
+    id 'war'
+    id 'eclipse-wtp'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework:spring-webmvc:5.3.14'
+}
+
+eclipse {
+    wtp {
+        component {
+            contextPath = 'wtp-bug'
+        }
+    }
+}
