@@ -1,10 +1,12 @@
 ## Reproduce steps in Eclipse
 
 1. Import the project as the Gradle project in Eclipse for Java EE.
-2. Add the tomcat server and add the `app` module to the configured section.
-3. Double-click the tomcat server and change the `Server Options` as below.
-4. Start the tomcat server.
-5. Visit http://localhost:8080/wtp-bug and error occurred here.
+2. Add the tomcat server and add the `app` module to the configured section.  
+   <img src="https://user-images.githubusercontent.com/3297602/148646558-769360e5-9d2a-4aa9-93d0-cf0096c783f1.png" width="436">
+4. Double-click the tomcat server and change the `Server Options` as below, save the configuration.  
+   <img src="https://user-images.githubusercontent.com/3297602/148646716-b3626670-aa88-4f1c-8432-988172dee446.png" width="433">
+6. Start the tomcat server.
+7. Visit http://localhost:8080/wtp-bug and error occurrs here.
 
 ## Troubleshooting
 
@@ -16,7 +18,7 @@ org.apache.jasper.JasperException: The absolute uri: [http://www.springframework
 
 It complains that the server couldn't find the tld in web.xml or the jar files. While, actually, the tld the server couldn't find locates the `spring-webmvc-5.3.14.jar!/META-INF/spring-form.tld`.
 
-The reason why the server couldn't find it is the jar files are mounted to the `/WEB-INF/classes` in the tomcat context XML (see below),  
+The reason why the server couldn't find it is the jar files are mounted to the `/WEB-INF/classes` folder in the tomcat context XML (see below),  
 which means the `META-INF` folder inside the jar files are ignored.
 
 ```xml
@@ -35,9 +37,6 @@ which means the `META-INF` folder inside the jar files are ignored.
 </Context>
 ```
 
-There is a similar issue reported to Tomcat years ago. https://bz.apache.org/bugzilla/show_bug.cgi?id=57791
+There is a similar issue reported to Tomcat years ago. https://bz.apache.org/bugzilla/show_bug.cgi?id=57791. The solution provided by this ticket is to configure the jar files as the `org.apache.catalina.webresources.FileResourceSet` and mount it to `/WEB-INF/lib/xxx.jar`.
 
-The solution is to configure the jar files as the `org.apache.catalina.webresources.FileResourceSet`,  
-and mount it to `/WEB-INF/lib/xxx.jar`.
-
-The related code could be https://git.eclipse.org/c/gerrit/servertools/webtools.servertools.git/tree/plugins/org.eclipse.jst.server.tomcat.core/tomcatcore/org/eclipse/jst/server/tomcat/core/internal/Tomcat90PublishModuleVisitor.java#n97
+The related code in Eclipse server plugin could be https://git.eclipse.org/c/gerrit/servertools/webtools.servertools.git/tree/plugins/org.eclipse.jst.server.tomcat.core/tomcatcore/org/eclipse/jst/server/tomcat/core/internal/Tomcat90PublishModuleVisitor.java#n97
