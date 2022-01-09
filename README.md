@@ -1,12 +1,20 @@
+**It works well in Tomcat `7.x`, and breaks from Tomcat `8.0.x`.**
+
+Related bug: https://bugs.eclipse.org/bugs/show_bug.cgi?id=493277
+
 ## Reproduce steps in Eclipse
 
 1. Import the project as the Gradle project in Eclipse for Java EE.
-2. Add the tomcat server and add the `app` module to the configured section.  
+1. Add the tomcat server and add the `app` module to the configured section.
+
    <img src="https://user-images.githubusercontent.com/3297602/148646558-769360e5-9d2a-4aa9-93d0-cf0096c783f1.png" width="436">
-4. Double-click the tomcat server and change the `Server Options` as below, save the configuration.  
+1. Double-click the tomcat server and change the `Server Options` as below, save the configuration.
+
    <img src="https://user-images.githubusercontent.com/3297602/148646716-b3626670-aa88-4f1c-8432-988172dee446.png" width="433">
-6. Start the tomcat server.
-7. Visit http://localhost:8080/wtp-bug and error occurrs here.
+   
+   **It is requried to check `Serve modules without publishing`**
+1. Start the tomcat server.
+1. Visit http://localhost:8080/wtp-bug and error occurrs here.
 
 ## Troubleshooting
 
