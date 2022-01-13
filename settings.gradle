@@ -9,3 +9,4 @@
 
 rootProject.name = 'wtp-tomcat-jar-resource-bug'
 include('app')
+include('app2')
